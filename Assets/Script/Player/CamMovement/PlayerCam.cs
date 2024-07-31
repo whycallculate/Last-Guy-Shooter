@@ -4,29 +4,32 @@ using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
 {
-    public float sensY = 400f;
-    public float sensX = 400f;
+    public float sensY = 2f;
+    public float sensX = 2f;
     public Transform ortasyon;
 
-    float xRotation;
     float yRotation;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+    }
+    private void Update()
+    {
         CamMovement();
     }
 
     public void CamMovement()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * sensY;
+        float mouseX = Input.GetAxisRaw("Mouse X") * sensX;
 
-        yRotation += mouseY;
-        xRotation += mouseX;
-        xRotation = Mathf.Clamp(xRotation, -90, 90);
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        ortasyon.rotation = Quaternion.Euler(0, yRotation, 0);
+        yRotation -= mouseY;
+        yRotation = Mathf.Clamp(yRotation, -90, 90);
+        transform.localEulerAngles = Vector3.right * yRotation;
+
+        ortasyon.Rotate(Vector3.up * mouseX);
     }
 }
