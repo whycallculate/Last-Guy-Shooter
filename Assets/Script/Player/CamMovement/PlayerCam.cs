@@ -8,7 +8,9 @@ public class PlayerCam : MonoBehaviour
     public float sensX = 2f;
     public Transform ortasyon;
 
+    float xRotation;
     float yRotation;
+
 
     private void Start()
     {
@@ -23,13 +25,16 @@ public class PlayerCam : MonoBehaviour
 
     public void CamMovement()
     {
-        float mouseY = Input.GetAxisRaw("Mouse Y") * sensY;
-        float mouseX = Input.GetAxisRaw("Mouse X") * sensX;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
-        yRotation -= mouseY;
-        yRotation = Mathf.Clamp(yRotation, -90, 90);
-        transform.localEulerAngles = Vector3.right * yRotation;
+        yRotation += mouseX;
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90, 90);
 
-        ortasyon.Rotate(Vector3.up * mouseX);
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        ortasyon.rotation = Quaternion.Euler(0,yRotation, 0);
+
+
     }
 }

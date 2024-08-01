@@ -19,28 +19,21 @@ public class InputManager : MonoBehaviour
     }
     #endregion
 
-    public bool isPresForw;
-    public bool isPresDown;
-    public bool isPresRight;
-    public bool isPresLeft;
+    public float VerticalPos;
+    public float HorizontalPos;
+    public KeyCode jumpKey = KeyCode.Space;
+
+    private void Update()
+    {
+        MoveInput();
+    }
     public void MoveInput()
     {
-        if(Input.GetKeyDown(KeyCode.W)) 
-        {
-            isPresForw = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            isPresDown = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            isPresRight = true;
-        }
-        else if(Input.GetKeyDown(KeyCode.A)) 
-        {
-            isPresLeft = true;
-        }
+        VerticalPos = Input.GetAxisRaw("Vertical");
+        HorizontalPos = Input.GetAxisRaw("Horizontal");
+        Debug.Log("Input manager move input");
+        Debug.Log(VerticalPos);
     }
+    
 
 }
